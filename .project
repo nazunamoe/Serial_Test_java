@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>serial</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/RXTXcomm.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/rxtx-2.1-7-bins-r2/RXTXcomm.jar</locationURI>
+		</link>
+		<link>
+			<name>lib/jssc.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/jSSC-2.7.0-Release/jssc.jar</locationURI>
+		</link>
+		<link>
+			<name>lib/rxtxSerial.dll</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/rxtx-2.1-7-bins-r2/rxtxSerial.dll</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
