@@ -1,13 +1,7 @@
 package GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import Function.Func;
-
 import javax.swing.JButton;
-import java.awt.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,13 +18,13 @@ class Test extends JFrame{
 		ActionListener Onlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Func.Cold();
+				func.Cold();
 			}
 		};
 		ActionListener Offlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Func.Off();
+				func.Off();
 			}
 		};
 		
@@ -40,23 +34,17 @@ class Test extends JFrame{
 		
 		pa.add(OFF);
 		add(pa);
-
 		
-		setSize(400,300);
+		setSize(220,170);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("에어컨 제어 시스템");
 		setVisible(true);
 	}
+
 }
-
-
 
 public class Main{
 	public static void main(String[] args) {
 		Test t = new Test();
-	}
-	
-	public void Cold() {
-		System.out.println("Cold");
 	}
 }
