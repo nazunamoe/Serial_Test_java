@@ -17,13 +17,18 @@ class Test extends JFrame{
 	private static final long serialVersionUID = 1L;
 	JPanel pa = new JPanel();
 	
-	JButton ON = new JButton("³Ã¹æ");
-	JButton OFF = new JButton("²ô±â");
-	JButton Connect = new JButton("¿¬°á");
-	JButton Disconnect = new JButton("²÷±â");
+	JButton ON = new JButton("ëƒ‰ë°©");
+	JButton OFF = new JButton("ë„ê¸°");
+	JButton Connect = new JButton("ì—°ê²°");
+	JButton Disconnect = new JButton("ëŠê¸°");
 	
-	JLabel title = new JLabel("¿¡¾îÄÁ Á¦¾î ½Ã½ºÅÛ");
+	JLabel title = new JLabel("ì—ì–´ì»¨ ì œì–´ ì‹œìŠ¤í…œ");
+	JLabel temp = new JLabel("ì˜¨ë„ : ");
+	JLabel humidity = new JLabel("ìŠµë„ : ");
 	JLabel logTitle = new JLabel("Log");
+	
+	JLabel tempvalue = new JLabel("0");
+	JLabel humidityvalue = new JLabel("0");
 	
 	JTextArea log = new JTextArea();
 	String logmessage ="";
@@ -56,12 +61,16 @@ class Test extends JFrame{
 		Disconnect.setBounds(200, 50, 70, 30);
 		logTitle.setBounds(20,120,340,30);
 		log.setBounds(20,150,340,140);
-
+		temp.setBounds(290,45,50,30);
+		humidity.setBounds(290,65,50,30);
+		tempvalue.setBounds(330,45,70,30);
+		humidityvalue.setBounds(330,65,70,30);
+		
 		func = new Func("COM1");
 
 		status();
 		
-		title.setFont(new Font("¸¼Àº °íµñ",Font.PLAIN,25));
+		title.setFont(new Font("ë§‘ì€ ê³ ë”•",Font.PLAIN,25));
 		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setBounds(20,50,70,30);
@@ -94,8 +103,7 @@ class Test extends JFrame{
 		ActionListener Selectlisten = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox temp = (JComboBox<?>)e.getSource();
-				func.number = temp.getSelectedIndex();
-				func.setPort();
+				func.changePort(temp.getSelectedIndex());
 				status();
 			}
 		};
@@ -117,12 +125,16 @@ class Test extends JFrame{
 		pa.add(title);
 		pa.add(logTitle);
 		pa.add(log);
+		pa.add(temp);
+		pa.add(humidity);
+		pa.add(tempvalue);
+		pa.add(humidityvalue);
 		
 		add(pa);
 		
 		setSize(400,350);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("¿¡¾îÄÁ Á¦¾î ½Ã½ºÅÛ");
+		setTitle("ì—ì–´ì»¨ ì œì–´ ì‹œìŠ¤í…œ");
 		setVisible(true);
 	}
 }

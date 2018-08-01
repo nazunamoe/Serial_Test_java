@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.Serial.SerialPortReader;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
@@ -11,17 +12,34 @@ class Func {
 	int number;
 	String Log;
 	
+	static String test;
+	
 	public Func(String portName) {
 		portNames = SerialPortList.getPortNames();
 		MySerialPort = new SerialPort[portNames.length];
 		for(int i=0; i<portNames.length; i++) {
 			MySerialPort[i] = new SerialPort(portNames[i]);
 		}
-		setPort();
+		setPort(0);
 		System.out.println("setuped"+portName);
 	}
 	
-	public void setPort() {
+	public void changePort(int num) {
+		if(MySerialPort[number].isOpened()) {
+			try {
+				MySerialPort[number].removeEventListener();
+				MySerialPort[number].closePort();
+				System.out.println("Removed listener from "+MySerialPort[number].getPortName());
+			} catch(SerialPortException ex) {
+				System.out.println(ex);
+				Log = ex.getPortName()+ex.getExceptionType();
+			}
+		}
+		setPort(num);
+	}
+	
+	public void setPort(int num) {
+		this.number = num;
 		System.out.println("Changed to : "+MySerialPort[number].getPortName());
 		Log = "Changed to : "+MySerialPort[number].getPortName();
 	}
@@ -36,11 +54,15 @@ class Func {
 	}
 	
 	public void Connect() {
+        int mask = SerialPort.MASK_RXCHAR;
 		try {
 			System.out.println("Connected : "+MySerialPort[number].getPortName());
 			Log = "Connected to : "+MySerialPort[number].getPortName();
 			MySerialPort[number].openPort();
 			MySerialPort[number].setParams(MySerialPort[number].BAUDRATE_9600,MySerialPort[number].DATABITS_8,MySerialPort[number].STOPBITS_1,MySerialPort[number].PARITY_NONE);
+			MySerialPort[number].setEventsMask(mask);
+			System.out.println(MySerialPort[number].getPortName());
+			MySerialPort[number].addEventListener(new SerialPortReader(MySerialPort[number]));
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
 			Log = ex.getPortName()+ex.getExceptionType();
@@ -59,9 +81,11 @@ class Func {
 	}
 	
 	public void Cold() {
-		System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
+		/*System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
 		Log = "Command (AN) to : "+MySerialPort[number].getPortName();
-		SendMessage("(AN)");
+		SendMessage("(AN)");*/
+        //Set the prepared mask
+
 	}
 	
 	public void Off() {
