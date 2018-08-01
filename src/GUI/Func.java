@@ -7,7 +7,6 @@ import jssc.SerialPortList;
 class Func {
 	
 	SerialPort MySerialPort[];
-	SerialPort SerialPort;
 	String[] portNames;
 	int number;
 	
@@ -22,13 +21,12 @@ class Func {
 	}
 	
 	public void setPort() {
-		SerialPort = MySerialPort[number];
-		System.out.println("Changed to : "+SerialPort.getPortName());
+		System.out.println("Changed to : "+MySerialPort[number].getPortName());
 	}
 	
 	private void SendMessage(String message) {
 		try {
-		SerialPort.writeString(message);
+			MySerialPort[number].writeString(message);
 		}catch(SerialPortException ex) {
 		System.out.println(ex);
 		}
@@ -36,9 +34,9 @@ class Func {
 	
 	public void Connect() {
 		try {
-			System.out.println("Connected : "+SerialPort.getPortName());
-			SerialPort.openPort();
-			SerialPort.setParams(SerialPort.BAUDRATE_9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+			System.out.println("Connected : "+MySerialPort[number].getPortName());
+			MySerialPort[number].openPort();
+			MySerialPort[number].setParams(MySerialPort[number].BAUDRATE_9600,MySerialPort[number].DATABITS_8,MySerialPort[number].STOPBITS_1,MySerialPort[number].PARITY_NONE);
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
 		}
@@ -46,20 +44,20 @@ class Func {
 	
 	public void Disconnect() {
 		try {
-			System.out.println("Disconnected : "+SerialPort.getPortName());
-			SerialPort.closePort();
+			System.out.println("Disconnected : "+MySerialPort[number].getPortName());
+			MySerialPort[number].closePort();
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
 		}
 	}
 	
 	public void Cold() {
-		System.out.println("Command (AN) to : "+SerialPort.getPortName());
+		System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
 		SendMessage("(AN)");
 	}
 	
 	public void Off() {
-		System.out.println("Command (AO) to : "+SerialPort.getPortName());
+		System.out.println("Command (AO) to : "+MySerialPort[number].getPortName());
 		SendMessage("(AO)");
 	}
 }

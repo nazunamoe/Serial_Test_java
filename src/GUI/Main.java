@@ -21,12 +21,12 @@ class Test extends JFrame{
 	Func func;
 	
 	private void status() {
-		if(func.SerialPort.isOpened() == false) {
+		if(func.MySerialPort[func.number].isOpened() == false) {
 			ON.setEnabled(false);
 			OFF.setEnabled(false);
 			Disconnect.setEnabled(false);
 			Connect.setEnabled(true);
-		}else if(func.SerialPort.isOpened() == true) {
+		}else if(func.MySerialPort[func.number].isOpened() == true) {
 			ON.setEnabled(true);
 			OFF.setEnabled(true);
 			Connect.setEnabled(false);
