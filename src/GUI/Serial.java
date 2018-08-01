@@ -25,13 +25,11 @@ public class Serial {
                     if(receivedData.equals(")")){
                         Func.test = Func.test+receivedData;
                         Func.test2 = Func.test;
-                        Func.gotcha = true;
                         //System.out.println(Func.test);
                         Func.test = "";
                     }else {
                         Func.test = Func.test+receivedData;
                     }
-                    Func.gotcha = false;
                 } catch (SerialPortException ex) {
                     System.out.println("Error in receiving string from COM-port: " + ex);
                 }
