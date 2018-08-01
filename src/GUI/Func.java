@@ -11,7 +11,6 @@ class Func {
 	String[] portNames;
 	int number;
 	String Log;
-	
 	static String test;
 	
 	public Func(String portName) {
@@ -61,7 +60,6 @@ class Func {
 			MySerialPort[number].openPort();
 			MySerialPort[number].setParams(MySerialPort[number].BAUDRATE_9600,MySerialPort[number].DATABITS_8,MySerialPort[number].STOPBITS_1,MySerialPort[number].PARITY_NONE);
 			MySerialPort[number].setEventsMask(mask);
-			System.out.println(MySerialPort[number].getPortName());
 			MySerialPort[number].addEventListener(new SerialPortReader(MySerialPort[number]));
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
@@ -81,11 +79,9 @@ class Func {
 	}
 	
 	public void Cold() {
-		/*System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
+		System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
 		Log = "Command (AN) to : "+MySerialPort[number].getPortName();
-		SendMessage("(AN)");*/
-        //Set the prepared mask
-
+		SendMessage("(AN)");
 	}
 	
 	public void Off() {
