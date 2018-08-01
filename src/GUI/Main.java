@@ -1,6 +1,7 @@
 package GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -34,6 +35,8 @@ public class Main extends JFrame implements Runnable{
 	JLabel humidityvalue = new JLabel("0");
 	
 	JTextArea log = new JTextArea();
+	JScrollPane logscroll = new JScrollPane(log);
+	
 	String logmessage ="";
 	
 	Func func;
@@ -64,6 +67,7 @@ public class Main extends JFrame implements Runnable{
 		Disconnect.setBounds(200, 50, 70, 30);
 		logTitle.setBounds(20,120,340,30);
 		log.setBounds(20,150,340,140);
+		logscroll.setBounds(20,150,340,140);
 		temp.setBounds(290,45,50,30);
 		humidity.setBounds(290,65,50,30);
 		tempvalue.setBounds(330,45,70,30);
@@ -136,7 +140,7 @@ public class Main extends JFrame implements Runnable{
 		pa.add(OFF);
 		pa.add(title);
 		pa.add(logTitle);
-		pa.add(log);
+		pa.add(logscroll);
 		pa.add(temp);
 		pa.add(humidity);
 		pa.add(tempvalue);
