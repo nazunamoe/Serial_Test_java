@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import jssc.SerialPort;
@@ -8,28 +9,28 @@ import jssc.SerialPortList;
 
 class Func {
 	
-	SerialPort MySerialPort;
+	ArrayList<SerialPort> MySerialPort = new ArrayList<SerialPort>();
+	SerialPort SerialPort;
 	String[] portNames;
-	String portName;
-	HashMap<String,Boolean> status = new HashMap<String,Boolean>();
+	int number;
 	
 	public Func(String portName) {
 		portNames = SerialPortList.getPortNames();
 		for(int i=0; i<portNames.length; i++) {
-			status.put(portNames[i], false);
+			MySerialPort.add(new SerialPort(portNames[i]));
 		}
-		setPort(portName);
+		setPort();
 		System.out.println("setuped"+portName);
 	}
 	
-	public void setPort(String portName) {
-		MySerialPort = new SerialPort(portName);
-		this.portName = portName;
+	public void setPort() {
+		SerialPort = MySerialPort.get(number);
+		System.out.println("Changed to : "+SerialPort.getPortName());
 	}
 	
 	private void SendMessage(String message) {
 		try {
-		MySerialPort.writeString(message);
+		SerialPort.writeString(message);
 		}catch(SerialPortException ex) {
 		System.out.println(ex);
 		}
@@ -37,10 +38,9 @@ class Func {
 	
 	public void Connect() {
 		try {
-			System.out.println("Connect : "+portName);
-			MySerialPort.openPort();
-			MySerialPort.setParams(SerialPort.BAUDRATE_9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
-			status.put(portName,true);
+			System.out.println("Connected : "+SerialPort.getPortName());
+			SerialPort.openPort();
+			SerialPort.setParams(SerialPort.BAUDRATE_9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
 		}
@@ -48,21 +48,20 @@ class Func {
 	
 	public void Disconnect() {
 		try {
-			System.out.println("Disconnect"+portName);
-			MySerialPort.closePort();
-			status.put(portName,false);
+			System.out.println("Disconnected : "+SerialPort.getPortName());
+			SerialPort.closePort();
 		}catch(SerialPortException ex) {
 			System.out.println(ex);
 		}
 	}
 	
 	public void Cold() {
-		System.out.println("Cold"+portName);
+		System.out.println("Command (AN) to : "+SerialPort.getPortName());
 		SendMessage("(AN)");
 	}
 	
 	public void Off() {
-		System.out.println("Off"+portName);
+		System.out.println("Command (AO) to : "+SerialPort.getPortName());
 		SendMessage("(AO)");
 	}
 }

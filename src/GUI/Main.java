@@ -11,9 +11,6 @@ import java.awt.event.ActionListener;
 
 class Test extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	JPanel pa = new JPanel();
 	JButton ON = new JButton("³Ã¹æ");
@@ -24,12 +21,12 @@ class Test extends JFrame{
 	Func func;
 	
 	private void status() {
-		if(func.status.get(func.portName) == false) {
+		if(func.SerialPort.isOpened() == false) {
 			ON.setEnabled(false);
 			OFF.setEnabled(false);
 			Disconnect.setEnabled(false);
 			Connect.setEnabled(true);
-		}else if(func.status.get(func.portName) == true) {
+		}else if(func.SerialPort.isOpened() == true) {
 			ON.setEnabled(true);
 			OFF.setEnabled(true);
 			Connect.setEnabled(false);
@@ -80,7 +77,8 @@ class Test extends JFrame{
 		ActionListener Selectlisten = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox temp = (JComboBox<?>)e.getSource();
-				func.setPort(temp.getSelectedItem().toString());
+				func.number = temp.getSelectedIndex();
+				func.setPort();
 				status();
 			}
 		};
