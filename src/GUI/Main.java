@@ -12,9 +12,12 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Test extends JFrame{
+public class Main extends JFrame implements Runnable{
 
 	private static final long serialVersionUID = 1L;
+	
+	private Thread thread;
+	
 	JPanel pa = new JPanel();
 	
 	JButton ON = new JButton("냉방");
@@ -51,7 +54,7 @@ class Test extends JFrame{
 		log.setText(logmessage);
 	}
 	
-	public Test() {
+	public Main() {
 		
 		pa.setLayout(null);
 		title.setBounds(85,10,260,30);
@@ -67,6 +70,11 @@ class Test extends JFrame{
 		humidityvalue.setBounds(330,65,70,30);
 		
 		func = new Func("COM1");
+		
+		if(thread == null) {
+			thread = new Thread(this);
+			thread.start();
+		}
 
 		status();
 		
@@ -97,6 +105,8 @@ class Test extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Disconnect();
+				func.test2 = "";
+				func.test = "";
 				status();
 			}
 		}; 
@@ -104,6 +114,8 @@ class Test extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				JComboBox temp = (JComboBox<?>)e.getSource();
 				func.changePort(temp.getSelectedIndex());
+				func.test2 = "";
+				func.test = "";
 				status();
 			}
 		};
@@ -137,10 +149,38 @@ class Test extends JFrame{
 		setTitle("에어컨 제어 시스템");
 		setVisible(true);
 	}
-}
-
-public class Main{
+	
 	public static void main(String[] args) {
-		Test t = new Test();
+		new Main();
+	}
+	
+	public void setvalue(String command) {
+
+		int a = command.lastIndexOf("(");
+		command = command.substring(a+1,command.length()-1);
+		
+		String[] list = command.split(",");
+		
+		tempvalue.setText(list[1]+" °C");
+		humidityvalue.setText(list[2]);
+		
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			if(func.test2 != null) {
+				if(func.test2.contains("(TH")) {
+					System.out.print(func.test2);
+					setvalue(func.test2);
+				}
+			}
+			
+			try {
+				Thread.sleep(1000);
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 }

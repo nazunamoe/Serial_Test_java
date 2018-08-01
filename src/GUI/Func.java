@@ -11,7 +11,8 @@ class Func {
 	String[] portNames;
 	int number;
 	String Log;
-	static String test;
+	static String test="";
+	static String test2;
 	
 	public Func(String portName) {
 		portNames = SerialPortList.getPortNames();

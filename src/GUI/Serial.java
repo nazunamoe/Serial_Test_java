@@ -22,11 +22,16 @@ public class Serial {
                 try {
                     String receivedData = serialPort.readString(1);
                     System.out.println("Received Message : "+receivedData);
-                    Func.test = Func.test+receivedData;
                     if(receivedData.equals(")")){
-                        System.out.println(Func.test);
+                        Func.test = Func.test+receivedData;
+                        Func.test2 = Func.test;
+                        Func.gotcha = true;
+                        //System.out.println(Func.test);
                         Func.test = "";
+                    }else {
+                        Func.test = Func.test+receivedData;
                     }
+                    Func.gotcha = false;
                 } catch (SerialPortException ex) {
                     System.out.println("Error in receiving string from COM-port: " + ex);
                 }
