@@ -1,30 +1,28 @@
 package GUI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 class Func {
 	
-	ArrayList<SerialPort> MySerialPort = new ArrayList<SerialPort>();
+	SerialPort MySerialPort[];
 	SerialPort SerialPort;
 	String[] portNames;
 	int number;
 	
 	public Func(String portName) {
 		portNames = SerialPortList.getPortNames();
+		MySerialPort = new SerialPort[portNames.length];
 		for(int i=0; i<portNames.length; i++) {
-			MySerialPort.add(new SerialPort(portNames[i]));
+			MySerialPort[i] = new SerialPort(portNames[i]);
 		}
 		setPort();
 		System.out.println("setuped"+portName);
 	}
 	
 	public void setPort() {
-		SerialPort = MySerialPort.get(number);
+		SerialPort = MySerialPort[number];
 		System.out.println("Changed to : "+SerialPort.getPortName());
 	}
 	
