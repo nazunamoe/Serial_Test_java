@@ -41,7 +41,9 @@ public class Main extends JFrame implements Runnable{
 	JScrollPane logscroll = new JScrollPane(log);
 	JScrollBar logscrollbar = logscroll.getVerticalScrollBar();
 	
-	String logmessage ="";
+	private String logmessage ="";
+	
+	private int pos = 0;
 	
 	Func func;
 	
@@ -59,7 +61,7 @@ public class Main extends JFrame implements Runnable{
 		}
 		logmessage = logmessage+"\n"+func.Log;
 		log.setText(logmessage);
-		int pos = log.getText().length();
+		pos = log.getText().length();
 		log.setCaretPosition(pos);
 		log.requestFocus();
 	}
@@ -91,10 +93,10 @@ public class Main extends JFrame implements Runnable{
 		logTitle.setBounds(20,120,340,30);
 		log.setBounds(20,150,340,140);
 		logscroll.setBounds(20,150,340,140);
-		temp.setBounds(290,45,50,30);
-		humidity.setBounds(290,65,50,30);
-		tempvalue.setBounds(330,45,70,30);
-		humidityvalue.setBounds(330,65,70,30);
+		temp.setBounds(290,40,50,30);
+		humidity.setBounds(290,60,50,30);
+		tempvalue.setBounds(330,40,70,30);
+		humidityvalue.setBounds(330,60,70,30);
 
 		func = new Func("COM1");
 		

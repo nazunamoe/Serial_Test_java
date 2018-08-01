@@ -9,7 +9,7 @@ public class Serial {
  
 	static class SerialPortReader implements SerialPortEventListener {
 		    	
-		SerialPort serialPort;
+		private SerialPort serialPort;
 		    	
 		public SerialPortReader(SerialPort input) {
 			this.serialPort = input;
