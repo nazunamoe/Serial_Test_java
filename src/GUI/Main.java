@@ -160,10 +160,12 @@ public class Main extends JFrame implements Runnable{
 		command = command.substring(a+1,command.length()-1);
 		
 		String[] list = command.split(",");
-		
-		tempvalue.setText(list[1]+" °C");
-		humidityvalue.setText(list[2]);
-		
+		func.Log = "Data updated";
+		status();
+		if(list.length==3) {
+			tempvalue.setText(list[1]+" °C");
+			humidityvalue.setText(list[2]);
+		}
 	}
 
 	@Override
@@ -177,7 +179,7 @@ public class Main extends JFrame implements Runnable{
 			}
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			}catch(InterruptedException e) {
 				e.printStackTrace();
 			}

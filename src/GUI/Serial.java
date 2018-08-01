@@ -24,6 +24,7 @@ public class Serial {
                     System.out.println("Received Message : "+receivedData);
                     if(receivedData.equals(")")){
                         Func.test = Func.test+receivedData;
+                        
                         Func.test2 = Func.test;
                         //System.out.println(Func.test);
                         Func.test = "";
