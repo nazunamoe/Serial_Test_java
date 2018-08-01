@@ -21,7 +21,6 @@ class Func {
 			MySerialPort[i] = new SerialPort(portNames[i]);
 		}
 		setPort(0);
-		System.out.println("setuped"+portName);
 	}
 	
 	public void changePort(int num) {

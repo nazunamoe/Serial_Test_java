@@ -3,6 +3,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,6 +60,22 @@ public class Main extends JFrame implements Runnable{
 	}
 	
 	public Main() {
+		
+		try {
+			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		pa.setLayout(null);
 		title.setBounds(85,10,260,30);
@@ -164,12 +182,15 @@ public class Main extends JFrame implements Runnable{
 		command = command.substring(a+1,command.length()-1);
 		
 		String[] list = command.split(",");
-		func.Log = "Data updated";
-		status();
+
 		if(list.length==3) {
 			tempvalue.setText(list[1]+" °C");
 			humidityvalue.setText(list[2]);
+			func.Log = "Data updated : Temp : "+list[1]+" Humidity : "+list[2];
+		}else {
+			func.Log = "Data Wrong!";
 		}
+		status();
 	}
 
 	@Override
@@ -180,6 +201,14 @@ public class Main extends JFrame implements Runnable{
 					System.out.print(func.test2);
 					setvalue(func.test2);
 				}
+				else{
+					if(func.test2 != "") {
+						func.Log = "Data Wrong! : "+func.test2;
+						status();
+					}
+				}
+			}else if(func.test2 == "") {
+				return;
 			}
 			
 			try {
