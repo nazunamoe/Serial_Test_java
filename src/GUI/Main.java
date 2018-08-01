@@ -1,6 +1,7 @@
 package GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
@@ -38,6 +39,7 @@ public class Main extends JFrame implements Runnable{
 	
 	JTextArea log = new JTextArea();
 	JScrollPane logscroll = new JScrollPane(log);
+	JScrollBar logscrollbar = logscroll.getVerticalScrollBar();
 	
 	String logmessage ="";
 	
@@ -57,6 +59,9 @@ public class Main extends JFrame implements Runnable{
 		}
 		logmessage = logmessage+"\n"+func.Log;
 		log.setText(logmessage);
+		int pos = log.getText().length();
+		log.setCaretPosition(pos);
+		log.requestFocus();
 	}
 	
 	public Main() {
@@ -90,7 +95,7 @@ public class Main extends JFrame implements Runnable{
 		humidity.setBounds(290,65,50,30);
 		tempvalue.setBounds(330,45,70,30);
 		humidityvalue.setBounds(330,65,70,30);
-		
+
 		func = new Func("COM1");
 		
 		if(thread == null) {
@@ -185,7 +190,7 @@ public class Main extends JFrame implements Runnable{
 
 		if(list.length==3) {
 			tempvalue.setText(list[1]+" °C");
-			humidityvalue.setText(list[2]);
+			humidityvalue.setText(list[2]+" %");
 			func.Log = "Data updated : Temp : "+list[1]+" Humidity : "+list[2];
 		}else {
 			func.Log = "Data Wrong!";
