@@ -1,10 +1,13 @@
 package GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,11 +16,18 @@ class Test extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	JPanel pa = new JPanel();
+	
 	JButton ON = new JButton("³Ã¹æ");
 	JButton OFF = new JButton("²ô±â");
 	JButton Connect = new JButton("¿¬°á");
 	JButton Disconnect = new JButton("²÷±â");
+	
 	JLabel title = new JLabel("¿¡¾îÄÁ Á¦¾î ½Ã½ºÅÛ");
+	JLabel logTitle = new JLabel("Log");
+	
+	JTextArea log = new JTextArea();
+	String logmessage ="";
+	
 	Func func;
 	
 	private void status() {
@@ -32,20 +42,27 @@ class Test extends JFrame{
 			Connect.setEnabled(false);
 			Disconnect.setEnabled(true);
 		}
+		logmessage = logmessage+"\n"+func.Log;
+		log.setText(logmessage);
 	}
 	
 	public Test() {
 		
 		pa.setLayout(null);
-		title.setBounds(20,10,260,30);
+		title.setBounds(85,10,260,30);
 		ON.setBounds(20,90,120,30);
 		OFF.setBounds(150,90,120,30);
 		Connect.setBounds(110,50,70,30);
 		Disconnect.setBounds(200, 50, 70, 30);
+		logTitle.setBounds(20,120,340,30);
+		log.setBounds(20,150,340,140);
 
 		func = new Func("COM1");
 
 		status();
+		
+		title.setFont(new Font("¸¼Àº °íµñ",Font.PLAIN,25));
+		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setBounds(20,50,70,30);
 		ActionListener Onlisten = new ActionListener() {
@@ -83,13 +100,14 @@ class Test extends JFrame{
 			}
 		};
 		
-		title.setFont(new Font("¸¼Àº °íµñ",Font.PLAIN,25));
-		
 		select.addActionListener(Selectlisten);
 		ON.addActionListener(Onlisten);
 		OFF.addActionListener(Offlisten);
 		Connect.addActionListener(Connectlisten);
 		Disconnect.addActionListener(Disconnectlisten);
+				
+		log.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+		log.setEditable(false);
 		
 		pa.add(select);
 		pa.add(ON);
@@ -97,10 +115,12 @@ class Test extends JFrame{
 		pa.add(Disconnect);
 		pa.add(OFF);
 		pa.add(title);
+		pa.add(logTitle);
+		pa.add(log);
 		
 		add(pa);
 		
-		setSize(300,170);
+		setSize(400,350);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("¿¡¾îÄÁ Á¦¾î ½Ã½ºÅÛ");
 		setVisible(true);
