@@ -1,4 +1,5 @@
-package GUI;
+package Main;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -7,6 +8,11 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
+
+import GUI.ComboBoxEditor;
+import GUI.ComboBoxGUI;
+import GUI.StyledButtonUI;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -139,7 +145,6 @@ public class Main extends JFrame implements Runnable{
 		select.setEditor(new ComboBoxEditor());
 		select.setBounds(20,58,70,23);
 		select.setEditable(true);
-		//select.setFont(defaultfont);
 		
 		ActionListener Onlisten = new ActionListener() {
 			@Override

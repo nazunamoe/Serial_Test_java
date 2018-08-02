@@ -1,6 +1,6 @@
-package GUI;
+package Main;
 
-import GUI.Serial.SerialPortReader;
+import Main.Serial.SerialPortReader;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;

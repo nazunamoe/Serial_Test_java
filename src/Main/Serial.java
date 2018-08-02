@@ -1,4 +1,4 @@
-package GUI;
+package Main;
 
 import jssc.SerialPort;
 import jssc.SerialPortEvent;

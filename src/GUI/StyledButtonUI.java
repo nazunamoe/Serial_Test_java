@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.*;
 
-class StyledButtonUI extends BasicButtonUI {
+public class StyledButtonUI extends BasicButtonUI {
 	
 	Color theme;
 	
