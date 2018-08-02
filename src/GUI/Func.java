@@ -55,7 +55,7 @@ class Func {
 	
 	public void setPort(int num) {
 		this.number = num;
-		System.out.println("Changed to : "+MySerialPort[number].getPortName());
+		//System.out.println("Changed to : "+MySerialPort[number].getPortName());
 		Log = "Changed to : "+MySerialPort[number].getPortName();
 	}
 	

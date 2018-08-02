@@ -27,7 +27,7 @@ class StyledButtonUI extends BasicButtonUI {
 		Dimension size = c.getSize();
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.GREEN);
+		g.setColor(Main.theme);
 		g.fillRoundRect(0, yOffset, size.width, size.height - yOffset, 10, 10);
 		g.setColor(c.getBackground());
 		g.fillRoundRect(0, yOffset, size.width, size.height + yOffset - 5, 10, 10);

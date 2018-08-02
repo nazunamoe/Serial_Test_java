@@ -15,12 +15,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class Main extends JFrame implements Runnable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Thread thread;
+	
+	static Color theme = Color.RED;
+	
+	Random random = new Random();
 	
 	JPanel pa = new JPanel();
 	
@@ -123,16 +128,16 @@ public class Main extends JFrame implements Runnable{
 		Connect.setBounds(110,50,70,30);
 		Disconnect.setBounds(200, 50, 70, 30);
 		logTitle.setBounds(20,120,340,30);
-		log.setBounds(20,150,340,140);
-		logscroll.setBounds(20,150,340,140);
-		temp1.setBounds(285,40,55,30);
-		humidity1.setBounds(285,60,55,30);
-		temp2.setBounds(285,80,55,30);
-		humidity2.setBounds(285,100,55,30);
-		tempvalue1.setBounds(335,40,70,30);
-		humidityvalue1.setBounds(335,60,70,30);
-		tempvalue2.setBounds(335,80,70,30);
-		humidityvalue2.setBounds(335,100,70,30);
+		log.setBounds(20,150,355,140);
+		logscroll.setBounds(20,150,355,140);
+		temp1.setBounds(285,45,55,30);
+		humidity1.setBounds(285,65,55,30);
+		temp2.setBounds(285,85,55,30);
+		humidity2.setBounds(285,105,55,30);
+		tempvalue1.setBounds(335,45,70,30);
+		humidityvalue1.setBounds(335,65,70,30);
+		tempvalue2.setBounds(335,85,70,30);
+		humidityvalue2.setBounds(335,105,70,30);
 		Exit.setBounds(200, 90, 70, 30);
 
 		func = new Func("COM1");
@@ -147,8 +152,11 @@ public class Main extends JFrame implements Runnable{
 		title.setFont(new Font("맑은 고딕",Font.PLAIN,25));
 		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
+		select.setRenderer(new ComboBoxGUI());
+		select.setEditor(new ComboBoxEditor());
 		select.setBounds(20,50,70,30);
-		select.setFont(defaultfont);
+		select.setEditable(true);
+		//select.setFont(defaultfont);
 		
 		ActionListener Onlisten = new ActionListener() {
 			@Override
@@ -183,8 +191,10 @@ public class Main extends JFrame implements Runnable{
 		}; 
 		ActionListener Selectlisten = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox temp = (JComboBox<?>)e.getSource();
+				JComboBox temp = (JComboBox) e.getSource();
+				System.out.println(func.MySerialPort.length);
 				func.changePort(temp.getSelectedIndex());
+				System.out.println(temp.getSelectedIndex());
 				func.Command1 = "";
 				func.Command2 = "";
 				func.CommandByte = "";
@@ -205,7 +215,7 @@ public class Main extends JFrame implements Runnable{
 		Disconnect.addActionListener(Disconnectlisten);
 		Exit.addActionListener(Exitlisten);
 				
-		log.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+		logscroll.setBorder(new LineBorder(theme,1));
 		log.setEditable(false);
 		
 		pa.add(select);
@@ -228,7 +238,7 @@ public class Main extends JFrame implements Runnable{
 		
 		add(pa);
 		
-		setSize(400,350);
+		setSize(415,350);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("에어컨 제어 시스템");
 		setVisible(true);
