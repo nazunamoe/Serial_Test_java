@@ -11,8 +11,9 @@ class Func {
 	String[] portNames;
 	int number;
 	String Log;
-	static String test="";
-	static String test2;
+	static String CommandByte="";
+	static String Command1;
+	static String Command2;
 	
 	public Func(String portName) {
 		portNames = SerialPortList.getPortNames();
@@ -21,6 +22,21 @@ class Func {
 			MySerialPort[i] = new SerialPort(portNames[i]);
 		}
 		setPort(0);
+	}
+	
+	public static void getCommand(String input) {
+		System.out.println("COMMAND1 : "+input);
+		if(input != null) {
+			if(input.contains("TH1")) {
+				Command1 = input;
+				System.out.println("COMMAND1 : "+input);
+			}else if(input.contains("TH2")) {	
+				Command2 = input;
+				System.out.println("COMMAND2 : "+input);
+			}else {
+
+			}
+		}
 	}
 	
 	public void changePort(int num) {

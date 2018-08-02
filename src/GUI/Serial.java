@@ -16,26 +16,21 @@ public class Serial {
 		}
  
 		public void serialEvent(SerialPortEvent event) {
-			//Object type SerialPortEvent carries information about which event occurred and a value.
-			//For example, if the data came a method event.getEventValue() returns us the number of bytes in the input buffer.
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
 					String receivedData = serialPort.readString(1);
 					System.out.println("Received Message : "+receivedData);
 					if(receivedData.equals(")")){
-						Func.test = Func.test+receivedData;
-		                        
-						Func.test2 = Func.test;
-						//System.out.println(Func.test);
-						Func.test = "";
+						Func.CommandByte = Func.CommandByte+receivedData;
+		                Func.getCommand(Func.CommandByte);  
+						Func.CommandByte = "";
 					}else {
-						Func.test = Func.test+receivedData;
+						Func.CommandByte = Func.CommandByte+receivedData;
 					}
 				} catch (SerialPortException ex) {
 					System.out.println("Error in receiving string from COM-port: " + ex);
 				}
 			}
-			//If the CTS line status has changed, then the method event.getEventValue() returns 1 if the line is ON and 0 if it is OFF.
 			else if(event.isCTS()){
 				if(event.getEventValue() == 1){
 					System.out.println("CTS - ON");

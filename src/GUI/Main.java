@@ -31,12 +31,17 @@ public class Main extends JFrame implements Runnable{
 	JButton Exit = new JButton("종료");
 	
 	JLabel title = new JLabel("에어컨 제어 시스템");
-	JLabel temp = new JLabel("온도 : ");
-	JLabel humidity = new JLabel("습도 : ");
-	JLabel logTitle = new JLabel("Log");
+	JLabel logTitle = new JLabel("Log");	
 	
-	JLabel tempvalue = new JLabel("0");
-	JLabel humidityvalue = new JLabel("0");
+	JLabel temp1 = new JLabel("온도 1 : ");
+	JLabel humidity1 = new JLabel("습도 1 : ");
+	JLabel temp2 = new JLabel("온도 2 : ");
+	JLabel humidity2 = new JLabel("습도 2 : ");
+	
+	JLabel tempvalue1 = new JLabel("0");
+	JLabel humidityvalue1 = new JLabel("0");
+	JLabel tempvalue2 = new JLabel("0");
+	JLabel humidityvalue2 = new JLabel("0");
 	
 	JTextArea log = new JTextArea();
 	JScrollPane logscroll = new JScrollPane(log);
@@ -100,27 +105,35 @@ public class Main extends JFrame implements Runnable{
 		OFF.setFont(defaultfont);
 		Connect.setFont(defaultfont);
 		Disconnect.setFont(defaultfont);
-		temp.setFont(defaultfont);
-		humidity.setFont(defaultfont);
-		tempvalue.setFont(defaultfont);
-		humidityvalue.setFont(defaultfont);
+		temp1.setFont(defaultfont);
+		humidity1.setFont(defaultfont);
+		temp2.setFont(defaultfont);
+		humidity2.setFont(defaultfont);
+		tempvalue1.setFont(defaultfont);
+		humidityvalue1.setFont(defaultfont);
+		tempvalue2.setFont(defaultfont);
+		humidityvalue2.setFont(defaultfont);
 		logscroll.setFont(defaultfont);
 		log.setFont(defaultfont);
 		logTitle.setFont(defaultfont);
 		
 		title.setBounds(85,10,260,30);
-		ON.setBounds(20,90,120,30);
-		OFF.setBounds(150,90,120,30);
+		ON.setBounds(20,90,70,30);
+		OFF.setBounds(110,90,70,30);
 		Connect.setBounds(110,50,70,30);
 		Disconnect.setBounds(200, 50, 70, 30);
 		logTitle.setBounds(20,120,340,30);
 		log.setBounds(20,150,340,140);
 		logscroll.setBounds(20,150,340,140);
-		temp.setBounds(285,40,50,30);
-		humidity.setBounds(285,60,50,30);
-		tempvalue.setBounds(325,40,70,30);
-		humidityvalue.setBounds(325,60,70,30);
-		Exit.setBounds(280, 90, 80, 30);
+		temp1.setBounds(285,40,55,30);
+		humidity1.setBounds(285,60,55,30);
+		temp2.setBounds(285,80,55,30);
+		humidity2.setBounds(285,100,55,30);
+		tempvalue1.setBounds(335,40,70,30);
+		humidityvalue1.setBounds(335,60,70,30);
+		tempvalue2.setBounds(335,80,70,30);
+		humidityvalue2.setBounds(335,100,70,30);
+		Exit.setBounds(200, 90, 70, 30);
 
 		func = new Func("COM1");
 		
@@ -162,8 +175,8 @@ public class Main extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Disconnect();
-				func.test2 = "";
-				func.test = "";
+				func.Command1 = "";
+				func.CommandByte = "";
 				status();
 			}
 		}; 
@@ -171,8 +184,8 @@ public class Main extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				JComboBox temp = (JComboBox<?>)e.getSource();
 				func.changePort(temp.getSelectedIndex());
-				func.test2 = "";
-				func.test = "";
+				func.Command1 = "";
+				func.CommandByte = "";
 				status();
 			}
 		};
@@ -201,10 +214,14 @@ public class Main extends JFrame implements Runnable{
 		pa.add(title);
 		pa.add(logTitle);
 		pa.add(logscroll);
-		pa.add(temp);
-		pa.add(humidity);
-		pa.add(tempvalue);
-		pa.add(humidityvalue);
+		pa.add(temp1);
+		pa.add(humidity1);
+		pa.add(tempvalue1);
+		pa.add(humidityvalue1);
+		pa.add(temp2);
+		pa.add(humidity2);
+		pa.add(tempvalue2);
+		pa.add(humidityvalue2);
 		pa.add(Exit);
 		
 		add(pa);
@@ -219,7 +236,7 @@ public class Main extends JFrame implements Runnable{
 		new Main();
 	}
 	
-	public void setvalue(String command) {
+	public void setvalue(String command, int number) {
 
 		int a = command.lastIndexOf("(");
 		command = command.substring(a+1,command.length()-1);
@@ -227,9 +244,15 @@ public class Main extends JFrame implements Runnable{
 		String[] list = command.split(",");
 
 		if(list.length==3) {
-			tempvalue.setText(list[1]+" °C");
-			humidityvalue.setText(list[2]+" %");
-			func.Log = "Data updated : Temp : "+list[1]+" Humidity : "+list[2];
+			if(number ==1) {
+				tempvalue1.setText(list[1]+" °C");
+				humidityvalue1.setText(list[2]+" %");
+				func.Log = "Data updated from TH1 : Temp : "+list[1]+" Humidity : "+list[2];
+			}else if(number ==2) {
+				tempvalue2.setText(list[1]+" °C");
+				humidityvalue2.setText(list[2]+" %");
+				func.Log = "Data updated from TH2 : Temp : "+list[1]+" Humidity : "+list[2];
+			}
 		}else {
 			func.Log = "Data Wrong!";
 		}
@@ -239,18 +262,17 @@ public class Main extends JFrame implements Runnable{
 	@Override
 	public void run() {
 		while(true) {
-			if(func.test2 != null) {
-				if(func.test2.contains("(TH")) {
-					System.out.print(func.test2);
-					setvalue(func.test2);
-				}
-				else{
-					if(func.test2 != "") {
-						func.Log = "Data Wrong! : "+func.test2;
-						status();
-					}
-				}
-			}else if(func.test2 == "") {
+			if(func.Command1 != null) {
+				System.out.print(func.Command1);
+				setvalue(func.Command1,1);
+			}else if(func.Command1 == "") {
+				return;
+			}
+			
+			if(func.Command2 != null) {
+				System.out.print(func.Command2);
+				setvalue(func.Command2,2);
+			}else if(func.Command2 == "") {
 				return;
 			}
 			
