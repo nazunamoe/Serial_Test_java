@@ -16,36 +16,18 @@ public class Serial {
 		}
  
 		public void serialEvent(SerialPortEvent event) {
-			if (event.isRXCHAR() && event.getEventValue() > 0) {
-				try {
-					String receivedData = serialPort.readString(1);
-					System.out.println("Received Message : "+receivedData);
-					if(receivedData.equals(")")){
-						Func.CommandByte = Func.CommandByte+receivedData;
-		                Func.getCommand(Func.CommandByte);  
-						Func.CommandByte = "";
-					}else {
-						Func.CommandByte = Func.CommandByte+receivedData;
-					}
-				} catch (SerialPortException ex) {
-					System.out.println("Error in receiving string from COM-port: " + ex);
+			try {
+				String receivedData = serialPort.readString(event.getEventValue());
+				System.out.println("Received Message : "+receivedData);
+				if(receivedData.contains(")")){
+					Func.CommandByte = Func.CommandByte.append(receivedData);
+	                Func.getCommand(Func.CommandByte.toString());  
+					Func.CommandByte = new StringBuffer("");
+				}else {
+					Func.CommandByte = Func.CommandByte.append(receivedData);
 				}
-			}
-			else if(event.isCTS()){
-				if(event.getEventValue() == 1){
-					System.out.println("CTS - ON");
-				}
-				else {
-					System.out.println("CTS - OFF");
-				}
-			}
-			else if(event.isDSR()){
-				if(event.getEventValue() == 1){
-					System.out.println("DSR - ON");
-				}
-				else {
-					System.out.println("DSR - OFF");
-				}
+			} catch (SerialPortException ex) {
+				System.out.println("Error in receiving string from COM-port: " + ex);
 			}
 		}
 	}

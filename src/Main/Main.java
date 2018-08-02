@@ -171,9 +171,9 @@ public class Main extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Disconnect();
-				func.Command1 = "";
-				func.Command2 = "";
-				func.CommandByte = "";
+				func.Command1 = new StringBuffer("");
+				func.Command2 = new StringBuffer("");
+				func.CommandByte = new StringBuffer("");
 				status();
 			}
 		}; 
@@ -183,9 +183,10 @@ public class Main extends JFrame implements Runnable{
 				System.out.println(func.MySerialPort.length);
 				func.changePort(temp.getSelectedIndex());
 				System.out.println(temp.getSelectedIndex());
-				func.Command1 = "";
-				func.Command2 = "";
-				func.CommandByte = "";
+				func.Command1 = new StringBuffer("");
+				func.Command2 = new StringBuffer("");
+				func.CommandByte = new StringBuffer("");
+				
 				status();
 			}
 		};
@@ -239,7 +240,8 @@ public class Main extends JFrame implements Runnable{
 	public void setvalue(String command, int number) {
 
 		int a = command.lastIndexOf("(");
-		command = command.substring(a+1,command.length()-1);
+		int b = command.lastIndexOf(")");
+		command = command.substring(a+1,b);
 		String[] list = command.split(",");
 
 		if(list.length==3) {
@@ -256,31 +258,40 @@ public class Main extends JFrame implements Runnable{
 			func.Log = "Data Wrong!";
 		}
 		status();
+		func.gotcha = false;
 	}
 
 	@Override
 	public void run() {
 		while(true) {
-			if(func.Command1 != null) {
-				if(func.Command1.contains("TH1")) {
-					System.out.print(func.Command1);
-					setvalue(func.Command1,1);
+			
+			//System.out.println("COMMAND:"+func.Command1);
+			if(func.gotcha) {
+				if(func.Command1 != null) {
+					if(func.Command1.indexOf("TH1")!=-1) {
+						System.out.print(func.Command1.toString());
+						setvalue(func.Command1.toString(),1);
+					}
+				}else {
+					return;
 				}
-			}else if(func.Command1 == "") {
-				return;
+				
+				if(func.Command2 != null) {
+					if(func.Command2.indexOf("TH2")!=-1) {			
+						System.out.print(func.Command2.toString());
+						setvalue(func.Command2.toString(),2);
+					}
+				}else  {
+					return;
+				}
+				func.Command1 = new StringBuffer("");
+				func.Command2 = new StringBuffer("");
+				func.CommandByte = new StringBuffer("");
 			}
 			
-			if(func.Command2 != null) {
-				if(func.Command2.contains("TH2")) {
-					System.out.print(func.Command2);
-					setvalue(func.Command2,2);
-				}
-			}else if(func.Command2 == "") {
-				return;
-			}
-			
+
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(1);
 			}catch(InterruptedException e) {
 				e.printStackTrace();
 			}
