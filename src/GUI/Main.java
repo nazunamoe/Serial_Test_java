@@ -23,9 +23,9 @@ public class Main extends JFrame implements Runnable{
 	
 	private Thread thread;
 	
-	static Color theme = Color.RED;
+	static Random random = new Random();
 	
-	Random random = new Random();
+	static Color theme = new Color(random.nextInt(170),random.nextInt(170),random.nextInt(170));
 	
 	JPanel pa = new JPanel();
 	
@@ -154,7 +154,7 @@ public class Main extends JFrame implements Runnable{
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setRenderer(new ComboBoxGUI());
 		select.setEditor(new ComboBoxEditor());
-		select.setBounds(20,50,70,30);
+		select.setBounds(20,58,70,23);
 		select.setEditable(true);
 		//select.setFont(defaultfont);
 		
