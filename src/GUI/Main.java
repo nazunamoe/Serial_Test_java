@@ -141,12 +141,13 @@ public class Main extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Cold();
-			}
+				status();			}
 		};
 		ActionListener Offlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Off();
+				status();		
 			}
 		}; 
 		ActionListener Connectlisten = new ActionListener() {
