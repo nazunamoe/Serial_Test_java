@@ -28,6 +28,7 @@ public class Main extends JFrame implements Runnable{
 	JButton OFF = new JButton("끄기");
 	JButton Connect = new JButton("연결");
 	JButton Disconnect = new JButton("끊기");
+	JButton Exit = new JButton("종료");
 	
 	JLabel title = new JLabel("에어컨 제어 시스템");
 	JLabel temp = new JLabel("온도 : ");
@@ -69,7 +70,7 @@ public class Main extends JFrame implements Runnable{
 	public Main() {
 		
 		try {
-			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+	        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -85,6 +86,28 @@ public class Main extends JFrame implements Runnable{
 		}
 		
 		pa.setLayout(null);
+		
+		Exit.setUI(new StyledButtonUI());
+		ON.setUI(new StyledButtonUI());
+		OFF.setUI(new StyledButtonUI());
+		Connect.setUI(new StyledButtonUI());
+		Disconnect.setUI(new StyledButtonUI());
+		
+		Font defaultfont = new Font("맑은 고딕",Font.PLAIN,13);
+		
+		Exit.setFont(defaultfont);
+		ON.setFont(defaultfont);
+		OFF.setFont(defaultfont);
+		Connect.setFont(defaultfont);
+		Disconnect.setFont(defaultfont);
+		temp.setFont(defaultfont);
+		humidity.setFont(defaultfont);
+		tempvalue.setFont(defaultfont);
+		humidityvalue.setFont(defaultfont);
+		logscroll.setFont(defaultfont);
+		log.setFont(defaultfont);
+		logTitle.setFont(defaultfont);
+		
 		title.setBounds(85,10,260,30);
 		ON.setBounds(20,90,120,30);
 		OFF.setBounds(150,90,120,30);
@@ -93,10 +116,11 @@ public class Main extends JFrame implements Runnable{
 		logTitle.setBounds(20,120,340,30);
 		log.setBounds(20,150,340,140);
 		logscroll.setBounds(20,150,340,140);
-		temp.setBounds(290,40,50,30);
-		humidity.setBounds(290,60,50,30);
-		tempvalue.setBounds(330,40,70,30);
-		humidityvalue.setBounds(330,60,70,30);
+		temp.setBounds(285,40,50,30);
+		humidity.setBounds(285,60,50,30);
+		tempvalue.setBounds(325,40,70,30);
+		humidityvalue.setBounds(325,60,70,30);
+		Exit.setBounds(280, 90, 80, 30);
 
 		func = new Func("COM1");
 		
@@ -111,6 +135,8 @@ public class Main extends JFrame implements Runnable{
 		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setBounds(20,50,70,30);
+		select.setFont(defaultfont);
+		
 		ActionListener Onlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,12 +174,19 @@ public class Main extends JFrame implements Runnable{
 				status();
 			}
 		};
+		ActionListener Exitlisten = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		}; 
 		
 		select.addActionListener(Selectlisten);
 		ON.addActionListener(Onlisten);
 		OFF.addActionListener(Offlisten);
 		Connect.addActionListener(Connectlisten);
 		Disconnect.addActionListener(Disconnectlisten);
+		Exit.addActionListener(Exitlisten);
 				
 		log.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
 		log.setEditable(false);
@@ -170,6 +203,7 @@ public class Main extends JFrame implements Runnable{
 		pa.add(humidity);
 		pa.add(tempvalue);
 		pa.add(humidityvalue);
+		pa.add(Exit);
 		
 		add(pa);
 		
