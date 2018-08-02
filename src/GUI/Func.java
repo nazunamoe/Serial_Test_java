@@ -46,7 +46,6 @@ class Func {
 				MySerialPort[number].closePort();
 				System.out.println("Removed listener from "+MySerialPort[number].getPortName());
 			} catch(SerialPortException ex) {
-				System.out.println(ex);
 				Log = ex.getPortName()+ex.getExceptionType();
 			}
 		}
@@ -63,7 +62,6 @@ class Func {
 		try {
 			MySerialPort[number].writeString(message);
 		}catch(SerialPortException ex) {
-		System.out.println(ex);
 		Log = ex.getPortName()+ex.getExceptionType();
 		}
 	}
@@ -74,7 +72,7 @@ class Func {
 			System.out.println("Connected : "+MySerialPort[number].getPortName());
 			Log = "Connected to : "+MySerialPort[number].getPortName();
 			MySerialPort[number].openPort();
-			MySerialPort[number].setParams(MySerialPort[number].BAUDRATE_9600,MySerialPort[number].DATABITS_8,MySerialPort[number].STOPBITS_1,MySerialPort[number].PARITY_NONE);
+			MySerialPort[number].setParams(SerialPort.BAUDRATE_9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
 			MySerialPort[number].setEventsMask(mask);
 			MySerialPort[number].addEventListener(new SerialPortReader(MySerialPort[number]));
 		}catch(SerialPortException ex) {
@@ -89,7 +87,6 @@ class Func {
 			Log = "Disconnected from : "+MySerialPort[number].getPortName();
 			MySerialPort[number].closePort();
 		}catch(SerialPortException ex) {
-			System.out.println(ex);
 			Log = ex.getPortName()+ex.getExceptionType();
 		}
 	}

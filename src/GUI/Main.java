@@ -23,9 +23,9 @@ public class Main extends JFrame implements Runnable{
 	
 	private Thread thread;
 	
-	static Random random = new Random();
+	Random random = new Random();
 	
-	static Color theme = new Color(random.nextInt(170),random.nextInt(170),random.nextInt(170));
+	Color theme = new Color(random.nextInt(170),random.nextInt(170),random.nextInt(170));
 	
 	JPanel pa = new JPanel();
 	
@@ -78,30 +78,13 @@ public class Main extends JFrame implements Runnable{
 	}
 	
 	public Main() {
-		
-		try {
-	        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InstantiationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		pa.setLayout(null);
 		
-		Exit.setUI(new StyledButtonUI());
-		ON.setUI(new StyledButtonUI());
-		OFF.setUI(new StyledButtonUI());
-		Connect.setUI(new StyledButtonUI());
-		Disconnect.setUI(new StyledButtonUI());
+		Exit.setUI(new StyledButtonUI(theme));
+		ON.setUI(new StyledButtonUI(theme));
+		OFF.setUI(new StyledButtonUI(theme));
+		Connect.setUI(new StyledButtonUI(theme));
+		Disconnect.setUI(new StyledButtonUI(theme));
 		
 		Font defaultfont = new Font("맑은 고딕",Font.PLAIN,13);
 		
@@ -252,7 +235,6 @@ public class Main extends JFrame implements Runnable{
 
 		int a = command.lastIndexOf("(");
 		command = command.substring(a+1,command.length()-1);
-		
 		String[] list = command.split(",");
 
 		if(list.length==3) {

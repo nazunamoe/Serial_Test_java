@@ -22,7 +22,6 @@ public class ComboBoxEditor extends BasicComboBoxEditor {
         
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
 		panel.add(label);
-		//panel.setBackground(Color.lightGray);
 	}
     
 	public Component getEditorComponent() {
