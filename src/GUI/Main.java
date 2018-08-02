@@ -176,6 +176,7 @@ public class Main extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				func.Disconnect();
 				func.Command1 = "";
+				func.Command2 = "";
 				func.CommandByte = "";
 				status();
 			}
@@ -185,6 +186,7 @@ public class Main extends JFrame implements Runnable{
 				JComboBox temp = (JComboBox<?>)e.getSource();
 				func.changePort(temp.getSelectedIndex());
 				func.Command1 = "";
+				func.Command2 = "";
 				func.CommandByte = "";
 				status();
 			}
@@ -263,15 +265,19 @@ public class Main extends JFrame implements Runnable{
 	public void run() {
 		while(true) {
 			if(func.Command1 != null) {
-				System.out.print(func.Command1);
-				setvalue(func.Command1,1);
+				if(func.Command1.contains("TH1")) {
+					System.out.print(func.Command1);
+					setvalue(func.Command1,1);
+				}
 			}else if(func.Command1 == "") {
 				return;
 			}
 			
 			if(func.Command2 != null) {
-				System.out.print(func.Command2);
-				setvalue(func.Command2,2);
+				if(func.Command2.contains("TH2")) {
+					System.out.print(func.Command2);
+					setvalue(func.Command2,2);
+				}
 			}else if(func.Command2 == "") {
 				return;
 			}
