@@ -27,7 +27,6 @@ class Func {
 	}
 	
 	public static void getCommand(String input) {
-		//System.out.println("COMMAND1 : "+input);
 		if(input != null) {
 			if(input.contains("TH1")) {
 				Command1.append(input);

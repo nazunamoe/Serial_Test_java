@@ -171,9 +171,9 @@ public class Main extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				func.Disconnect();
-				func.Command1 = new StringBuffer("");
-				func.Command2 = new StringBuffer("");
-				func.CommandByte = new StringBuffer("");
+				func.Command1 = new StringBuffer();
+				func.Command2 = new StringBuffer();
+				func.CommandByte = new StringBuffer();
 				status();
 			}
 		}; 
@@ -183,10 +183,9 @@ public class Main extends JFrame implements Runnable{
 				System.out.println(func.MySerialPort.length);
 				func.changePort(temp.getSelectedIndex());
 				System.out.println(temp.getSelectedIndex());
-				func.Command1 = new StringBuffer("");
-				func.Command2 = new StringBuffer("");
-				func.CommandByte = new StringBuffer("");
-				
+				func.Command1 = new StringBuffer();
+				func.Command2 = new StringBuffer();
+				func.CommandByte = new StringBuffer();
 				status();
 			}
 		};
@@ -265,7 +264,6 @@ public class Main extends JFrame implements Runnable{
 	public void run() {
 		while(true) {
 			
-			//System.out.println("COMMAND:"+func.Command1);
 			if(func.gotcha) {
 				if(func.Command1 != null) {
 					if(func.Command1.indexOf("TH1")!=-1) {
@@ -284,12 +282,11 @@ public class Main extends JFrame implements Runnable{
 				}else  {
 					return;
 				}
-				func.Command1 = new StringBuffer("");
-				func.Command2 = new StringBuffer("");
-				func.CommandByte = new StringBuffer("");
+				func.Command1 = new StringBuffer();
+				func.Command2 = new StringBuffer();
+				func.CommandByte = new StringBuffer();
 			}
 			
-
 			try {
 				Thread.sleep(1);
 			}catch(InterruptedException e) {
