@@ -93,15 +93,73 @@ class Func {
 		}
 	}
 	
-	public void Cold() {
-		System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
-		Log = "Command (AN) to : "+MySerialPort[number].getPortName();
-		SendMessage("(AN)");
+	public void Cold(int num) {
+		switch(num) {
+		case 0:{
+			System.out.println("Command (AN) to : "+MySerialPort[number].getPortName());
+			Log = "Command (AN) to : "+MySerialPort[number].getPortName();
+			SendMessage("(AN)");
+			break;
+		}
+		case 1:{
+			System.out.println("Command (SN1) to : "+MySerialPort[number].getPortName());
+			Log = "Command (SN1) to : "+MySerialPort[number].getPortName();
+			SendMessage("(SN1)");
+			break;
+		}
+		case 2:{
+			System.out.println("Command (SN2) to : "+MySerialPort[number].getPortName());
+			Log = "Command (SN2) to : "+MySerialPort[number].getPortName();
+			SendMessage("(SN2)");
+			break;
+		}
+		case 3:{
+			System.out.println("Command (WN) to : "+MySerialPort[number].getPortName());
+			Log = "Command (WN) to : "+MySerialPort[number].getPortName();
+			SendMessage("(WN)");
+			break;
+		}
+		}
 	}
 	
-	public void Off() {
-		System.out.println("Command (AO) to : "+MySerialPort[number].getPortName());
-		Log = "Command (AO) to : "+MySerialPort[number].getPortName();
-		SendMessage("(AO)");
+	public void Off(int num) {
+		switch(num) {
+		case 0:{
+			System.out.println("Command (AO) to : "+MySerialPort[number].getPortName());
+			Log = "Command (AO) to : "+MySerialPort[number].getPortName();
+			SendMessage("(AO)");
+			break;
+		}
+		case 1:{
+			System.out.println("Command (SO1) to : "+MySerialPort[number].getPortName());
+			Log = "Command (SO1) to : "+MySerialPort[number].getPortName();
+			SendMessage("(SO1)");
+			break;
+		}
+		case 2:{
+			System.out.println("Command (SO2) to : "+MySerialPort[number].getPortName());
+			Log = "Command (SO2) to : "+MySerialPort[number].getPortName();
+			SendMessage("(SO2)");
+			break;
+		}
+		case 3:{
+			System.out.println("Command (WO) to : "+MySerialPort[number].getPortName());
+			Log = "Command (WO) to : "+MySerialPort[number].getPortName();
+			SendMessage("(WO)");
+			break;
+		}
+		}
+	}
+	
+	public void resvOff(int num) {
+		if(num == 3 ) {
+			System.out.println("Command (WH) to : "+MySerialPort[number].getPortName());
+			Log = "Command (WH) to : "+MySerialPort[number].getPortName();
+			SendMessage("(WH)");
+		}else {
+			System.out.println("Command (SR\"+num+\") to : "+MySerialPort[number].getPortName());
+			Log = "Command (SR"+num+") to : "+MySerialPort[number].getPortName();
+			SendMessage("(SR"+num+")");
+		}
 	}
 }

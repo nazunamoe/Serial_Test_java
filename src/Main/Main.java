@@ -35,19 +35,32 @@ public class Main extends JFrame implements Runnable{
 	
 	JPanel pa = new JPanel();
 	
-	JButton ON = new JButton("ÎÉâÎ∞©");
-	JButton OFF = new JButton("ÎÅÑÍ∏∞");
-	JButton Connect = new JButton("Ïó∞Í≤∞");
-	JButton Disconnect = new JButton("ÎÅäÍ∏∞");
-	JButton Exit = new JButton("Ï¢ÖÎ£å");
+	JButton ON = new JButton("¿¸√º ≥√πÊ");
+	JButton OFF = new JButton("¿¸√º ≤Ù±‚");
+	JButton Connect = new JButton("ø¨∞·");
+	JButton Disconnect = new JButton("≤˜±‚");
+
+	JLabel sk1_title = new JLabel("SK_1");
+	JLabel sk2_title = new JLabel("SK_2");
+	JLabel roof_title = new JLabel("ROOF");
+
+	JButton sk1_on = new JButton("≥√πÊ");
+	JButton sk1_resvoff = new JButton("øπæ‡≤Ù±‚");
+	JButton sk1_off = new JButton("¿¸ø¯");
+	JButton sk2_on = new JButton("≥√πÊ");
+	JButton sk2_resvoff = new JButton("øπæ‡≤Ù±‚"); 
+	JButton sk2_off = new JButton("¿¸ø¯");
+	JButton roof_on = new JButton("≥√πÊ"); 
+	JButton roof_off = new JButton("≤Ù±‚"); 
+	JButton roof_heat = new JButton("≥≠πÊ"); 
 	
-	JLabel title = new JLabel("ÏóêÏñ¥Ïª® Ï†úÏñ¥ ÏãúÏä§ÌÖú");
+	JLabel title = new JLabel("ø°æÓƒ¡ ¡¶æÓ Ω√Ω∫≈€");
 	JLabel logTitle = new JLabel("Log");	
 	
-	JLabel temp1 = new JLabel("Ïò®ÎèÑ 1 : ");
-	JLabel humidity1 = new JLabel("ÏäµÎèÑ 1 : ");
-	JLabel temp2 = new JLabel("Ïò®ÎèÑ 2 : ");
-	JLabel humidity2 = new JLabel("ÏäµÎèÑ 2 : ");
+	JLabel temp1 = new JLabel("ø¬µµ1 : ");
+	JLabel humidity1 = new JLabel("Ω¿µµ1 : ");
+	JLabel temp2 = new JLabel("ø¬µµ2 : ");
+	JLabel humidity2 = new JLabel("Ω¿µµ2 : ");
 	
 	JLabel tempvalue1 = new JLabel("0");
 	JLabel humidityvalue1 = new JLabel("0");
@@ -68,11 +81,37 @@ public class Main extends JFrame implements Runnable{
 		if(func.MySerialPort[func.number].isOpened() == false) {
 			ON.setEnabled(false);
 			OFF.setEnabled(false);
+			
+			sk1_on.setEnabled(false);
+			sk2_on.setEnabled(false);
+			roof_on.setEnabled(false);
+			
+			sk1_off.setEnabled(false);
+			sk2_off.setEnabled(false);
+			roof_off.setEnabled(false);
+			
+			sk1_resvoff.setEnabled(false);
+			sk2_resvoff.setEnabled(false);
+			roof_heat.setEnabled(false);
+			
 			Disconnect.setEnabled(false);
 			Connect.setEnabled(true);
 		}else if(func.MySerialPort[func.number].isOpened() == true) {
 			ON.setEnabled(true);
 			OFF.setEnabled(true);
+			
+			sk1_on.setEnabled(true);
+			sk2_on.setEnabled(true);
+			roof_on.setEnabled(true);
+			
+			sk1_off.setEnabled(true);
+			sk2_off.setEnabled(true);
+			roof_off.setEnabled(true);
+			
+			sk1_resvoff.setEnabled(true);
+			sk2_resvoff.setEnabled(true);
+			roof_heat.setEnabled(true);
+			
 			Connect.setEnabled(false);
 			Disconnect.setEnabled(true);
 		}
@@ -86,15 +125,25 @@ public class Main extends JFrame implements Runnable{
 	public Main() {
 		pa.setLayout(null);
 		
-		Exit.setUI(new StyledButtonUI(theme));
 		ON.setUI(new StyledButtonUI(theme));
 		OFF.setUI(new StyledButtonUI(theme));
 		Connect.setUI(new StyledButtonUI(theme));
 		Disconnect.setUI(new StyledButtonUI(theme));
 		
-		Font defaultfont = new Font("ÎßëÏùÄ Í≥†Îîï",Font.PLAIN,13);
+		sk1_on.setUI(new StyledButtonUI(theme));
+		sk2_on.setUI(new StyledButtonUI(theme));
+		roof_on.setUI(new StyledButtonUI(theme));
 		
-		Exit.setFont(defaultfont);
+		sk1_off.setUI(new StyledButtonUI(theme));
+		sk2_off.setUI(new StyledButtonUI(theme));
+		roof_off.setUI(new StyledButtonUI(theme));
+		
+		sk1_resvoff.setUI(new StyledButtonUI(theme));
+		sk2_resvoff.setUI(new StyledButtonUI(theme));
+		roof_heat.setUI(new StyledButtonUI(theme));
+		
+		Font defaultfont = new Font("∏º¿∫ ∞ÌµÒ",Font.PLAIN,13);
+		
 		ON.setFont(defaultfont);
 		OFF.setFont(defaultfont);
 		Connect.setFont(defaultfont);
@@ -111,14 +160,30 @@ public class Main extends JFrame implements Runnable{
 		log.setFont(defaultfont);
 		logTitle.setFont(defaultfont);
 		
+		sk1_title.setFont(defaultfont);
+		sk2_title.setFont(defaultfont);
+		roof_title.setFont(defaultfont);
+		
+		sk1_on.setFont(defaultfont);
+		sk2_on.setFont(defaultfont);
+		roof_on.setFont(defaultfont);
+		
+		sk1_off.setFont(defaultfont);
+		sk2_off.setFont(defaultfont);
+		roof_off.setFont(defaultfont);
+		
+		sk1_resvoff.setFont(defaultfont);
+		sk2_resvoff.setFont(defaultfont);
+		roof_heat.setFont(defaultfont);
+		
 		title.setBounds(85,10,260,30);
-		ON.setBounds(20,90,70,30);
-		OFF.setBounds(110,90,70,30);
+		ON.setBounds(20,90,115,30);
+		OFF.setBounds(155,90,115,30);
 		Connect.setBounds(110,50,70,30);
 		Disconnect.setBounds(200, 50, 70, 30);
-		logTitle.setBounds(20,120,340,30);
-		log.setBounds(20,150,355,140);
-		logscroll.setBounds(20,150,355,140);
+		logTitle.setBounds(20,270,340,30);
+		log.setBounds(20,300,355,140);
+		logscroll.setBounds(20,300,355,140);
 		temp1.setBounds(285,45,55,30);
 		humidity1.setBounds(285,65,55,30);
 		temp2.setBounds(285,85,55,30);
@@ -127,7 +192,22 @@ public class Main extends JFrame implements Runnable{
 		humidityvalue1.setBounds(335,65,70,30);
 		tempvalue2.setBounds(335,85,70,30);
 		humidityvalue2.setBounds(335,105,70,30);
-		Exit.setBounds(200, 90, 70, 30);
+		
+		sk1_title.setBounds(35,150,70,30);
+		sk2_title.setBounds(35,190,70,30);
+		roof_title.setBounds(35,230,70,30);
+		
+		sk1_on.setBounds(100,145,70,30);
+		sk2_on.setBounds(100,185,70,30);
+		roof_on.setBounds(100,225,70,30);
+		
+		sk1_off.setBounds(190,145,70,30);
+		sk2_off.setBounds(190,185,70,30);
+		roof_off.setBounds(190,225,70,30);
+		
+		sk1_resvoff.setBounds(280,145,90,30);
+		sk2_resvoff.setBounds(280,185,90,30);
+		roof_heat.setBounds(280,225,90,30);
 
 		func = new Func("COM1");
 		
@@ -138,7 +218,7 @@ public class Main extends JFrame implements Runnable{
 
 		status();
 		
-		title.setFont(new Font("ÎßëÏùÄ Í≥†Îîï",Font.PLAIN,25));
+		title.setFont(new Font("∏º¿∫ ∞ÌµÒ",Font.PLAIN,25));
 		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setRenderer(new ComboBoxGUI());
@@ -149,14 +229,14 @@ public class Main extends JFrame implements Runnable{
 		ActionListener Onlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				func.Cold();
+				func.Cold(0);
 				status();			
 			}
 		};
 		ActionListener Offlisten = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				func.Off();
+				func.Off(0);
 				status();		
 			}
 		}; 
@@ -189,19 +269,76 @@ public class Main extends JFrame implements Runnable{
 				status();
 			}
 		};
-		ActionListener Exitlisten = new ActionListener() {
-			@Override
+		ActionListener sk1_onlisten = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				func.Cold(1);
+				status();	
 			}
-		}; 
+		};
+		ActionListener sk1_offlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.Off(1);
+				status();	
+			}
+		};
+		ActionListener sk1_resvofflisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.resvOff(1);
+				status();	
+			}
+		};
+		ActionListener sk2_onlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.Cold(2);
+				status();	
+			}
+		};
+		ActionListener sk2_offlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.Off(2);
+				status();	
+			}
+		};
+		ActionListener sk2_resvofflisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.resvOff(2);
+				status();	
+			}
+		};
+		ActionListener roof_onlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.Cold(3);
+				status();	
+			}
+		};
+		ActionListener roof_offlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.Off(3);
+				status();	
+			}
+		};
+		ActionListener roof_heatlisten = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				func.resvOff(3);
+				status();	
+			}
+		};
 		
 		select.addActionListener(Selectlisten);
 		ON.addActionListener(Onlisten);
 		OFF.addActionListener(Offlisten);
 		Connect.addActionListener(Connectlisten);
 		Disconnect.addActionListener(Disconnectlisten);
-		Exit.addActionListener(Exitlisten);
+		
+		sk1_on.addActionListener(sk1_onlisten);
+		sk1_off.addActionListener(sk1_offlisten);
+		sk1_resvoff.addActionListener(sk1_resvofflisten);
+		sk2_on.addActionListener(sk2_onlisten);
+		sk2_off.addActionListener(sk2_offlisten);
+		sk2_resvoff.addActionListener(sk2_resvofflisten);
+		roof_on.addActionListener(roof_onlisten);
+		roof_off.addActionListener(roof_offlisten);
+		roof_heat.addActionListener(roof_heatlisten);
 				
 		logscroll.setBorder(new LineBorder(theme,1));
 		log.setEditable(false);
@@ -222,13 +359,28 @@ public class Main extends JFrame implements Runnable{
 		pa.add(humidity2);
 		pa.add(tempvalue2);
 		pa.add(humidityvalue2);
-		pa.add(Exit);
+		
+		pa.add(sk1_title);
+		pa.add(sk2_title);
+		pa.add(roof_title);
+		
+		pa.add(sk1_on);
+		pa.add(sk2_on);
+		pa.add(roof_on);
+		
+		pa.add(sk1_off);
+		pa.add(sk2_off);
+		pa.add(roof_off);
+		
+		pa.add(sk1_resvoff);
+		pa.add(sk2_resvoff);
+		pa.add(roof_heat);
 		
 		add(pa);
 		
-		setSize(415,350);
+		setSize(415,500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("ÏóêÏñ¥Ïª® Ï†úÏñ¥ ÏãúÏä§ÌÖú");
+		setTitle("ø°æÓƒ¡ ¡¶æÓ Ω√Ω∫≈€");
 		setVisible(true);
 	}
 	
@@ -245,11 +397,11 @@ public class Main extends JFrame implements Runnable{
 
 		if(list.length==3) {
 			if(number ==1) {
-				tempvalue1.setText(list[1]+" ¬∞C");
+				tempvalue1.setText(list[1]+" ®¨C");
 				humidityvalue1.setText(list[2]+" %");
 				func.Log = "Data updated from TH1 : Temp : "+list[1]+" Humidity : "+list[2];
 			}else if(number ==2) {
-				tempvalue2.setText(list[1]+" ¬∞C");
+				tempvalue2.setText(list[1]+" ®¨C");
 				humidityvalue2.setText(list[2]+" %");
 				func.Log = "Data updated from TH2 : Temp : "+list[1]+" Humidity : "+list[2];
 			}
