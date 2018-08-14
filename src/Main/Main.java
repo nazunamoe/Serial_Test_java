@@ -9,21 +9,37 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 
+import com.mommoo.flat.button.FlatButton;
+import com.mommoo.flat.component.FlatPanel;
+import com.mommoo.flat.component.FlatScrollPane;
+import com.mommoo.flat.frame.FlatFrame;
+import com.mommoo.flat.frame.listener.OnExitListener;
+import com.mommoo.flat.layout.linear.LinearLayout;
+import com.mommoo.flat.layout.linear.Orientation;
+import com.mommoo.flat.text.label.FlatLabel;
+import com.mommoo.flat.text.textarea.FlatTextArea;
+
 import GUI.ComboBoxEditor;
 import GUI.ComboBoxGUI;
 import GUI.StyledButtonUI;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JComboBox;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Random;
 
-public class Main extends JFrame implements Runnable{
+public class Main extends JFrame implements Runnable, ComponentListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,44 +47,49 @@ public class Main extends JFrame implements Runnable{
 	
 	Random random = new Random();
 	
-	Color theme = new Color(random.nextInt(170),random.nextInt(170),random.nextInt(170));
+	Color theme = new Color(151,151,255);
 	
 	JPanel pa = new JPanel();
 	
-	JButton ON = new JButton("¿¸√º ≥√πÊ");
-	JButton OFF = new JButton("¿¸√º ≤Ù±‚");
-	JButton Connect = new JButton("ø¨∞·");
-	JButton Disconnect = new JButton("≤˜±‚");
+	double ss = 2.5;
+	
+	double height = 490*ss;
+	double width = 415*ss;
+
+	JButton ON = new JButton("Ï†ÑÏ≤¥ ÎÉâÎ∞©");
+	JButton OFF = new JButton("Ï†ÑÏ≤¥ ÎÅÑÍ∏∞");
+	JButton Connect = new JButton("Ïó∞Í≤∞");
+	JButton Disconnect = new JButton("ÎÅäÍ∏∞");
 
 	JLabel sk1_title = new JLabel("SK_1");
 	JLabel sk2_title = new JLabel("SK_2");
 	JLabel roof_title = new JLabel("ROOF");
 
-	JButton sk1_on = new JButton("≥√πÊ");
-	JButton sk1_resvoff = new JButton("øπæ‡≤Ù±‚");
-	JButton sk1_off = new JButton("¿¸ø¯");
-	JButton sk2_on = new JButton("≥√πÊ");
-	JButton sk2_resvoff = new JButton("øπæ‡≤Ù±‚"); 
-	JButton sk2_off = new JButton("¿¸ø¯");
-	JButton roof_on = new JButton("≥√πÊ"); 
-	JButton roof_off = new JButton("≤Ù±‚"); 
-	JButton roof_heat = new JButton("≥≠πÊ"); 
+	JButton sk1_on = new JButton("ÎÉâÎ∞©");
+	JButton sk1_resvoff = new JButton("ÏòàÏïΩÎÅÑÍ∏∞");
+	JButton sk1_off = new JButton("Ï†ÑÏõê");
+	JButton sk2_on = new JButton("ÎÉâÎ∞©");
+	JButton sk2_resvoff = new JButton("ÏòàÏïΩÎÅÑÍ∏∞");
+	JButton sk2_off = new JButton("Ï†ÑÏõê");
+	JButton roof_on = new JButton("ÎÉâÎ∞©"); 
+	JButton roof_off = new JButton("ÎÅÑÍ∏∞"); 
+	JButton roof_heat = new JButton("ÎÇúÎ∞©"); 
 	
-	JLabel title = new JLabel("ø°æÓƒ¡ ¡¶æÓ Ω√Ω∫≈€");
+	JLabel title = new JLabel("ÏóêÏñ¥Ïª® Ï†úÏñ¥ ÏãúÏä§ÌÖú");
 	JLabel logTitle = new JLabel("Log");	
 	
-	JLabel temp1 = new JLabel("ø¬µµ1 : ");
-	JLabel humidity1 = new JLabel("Ω¿µµ1 : ");
-	JLabel temp2 = new JLabel("ø¬µµ2 : ");
-	JLabel humidity2 = new JLabel("Ω¿µµ2 : ");
+	JLabel temp1 = new JLabel("Ïò®ÎèÑ1 : ");
+	JLabel humidity1 = new JLabel("ÏäµÎèÑ1 : ");
+	JLabel temp2 = new JLabel("Ïò®ÎèÑ2 : ");
+	JLabel humidity2 = new JLabel("ÏäµÎèÑ2 : ");
 	
 	JLabel tempvalue1 = new JLabel("0");
 	JLabel humidityvalue1 = new JLabel("0");
 	JLabel tempvalue2 = new JLabel("0");
 	JLabel humidityvalue2 = new JLabel("0");
 	
-	JTextArea log = new JTextArea();
-	JScrollPane logscroll = new JScrollPane(log);
+	FlatTextArea log = new FlatTextArea();
+	FlatScrollPane logscroll = new FlatScrollPane(log, theme);
 	JScrollBar logscrollbar = logscroll.getVerticalScrollBar();
 	
 	private String logmessage ="";
@@ -76,6 +97,33 @@ public class Main extends JFrame implements Runnable{
 	private int pos = 0;
 	
 	Func func;
+	
+	private int resizefont(int FontSize, int Width, int Height) {
+		
+		int size = FontSize;
+		
+		int framesize = Width * Height;
+		
+		
+		
+		if(Width < Height) {
+			size = (int)(getHeight()*0.05);
+		}else {
+			size = (int)(getWidth()*0.06);
+		}
+		
+		return size;
+	}
+	
+	private void resize() {
+		
+		double setWidth;
+		double setHeight;
+		
+		setWidth = getWidth()/width;
+		setHeight = getHeight()/height;
+		
+	}
 	
 	private void status() {
 		if(func.MySerialPort[func.number].isOpened() == false) {
@@ -116,33 +164,36 @@ public class Main extends JFrame implements Runnable{
 			Disconnect.setEnabled(true);
 		}
 		logmessage = logmessage+"\n"+func.Log;
+		if(getLineNum(logmessage)==50) {
+			logmessage = "";
+		}
 		log.setText(logmessage);
 		pos = log.getText().length();
 		log.setCaretPosition(pos);
 		log.requestFocus();
 	}
 	
+	public int getLineNum(String content){
+        int linenum = 0;
+        int point = 0;
+        int endcheck = content.lastIndexOf ('\n');
+        while(true){
+            point = content.indexOf('\n', point);
+            linenum++;
+            if(endcheck == point++) break;
+        }
+        return linenum;
+    }
+	
 	public Main() {
+		
+        setSize((int)(415*ss),(int)(500*ss));
+		
+        getContentPane().addComponentListener(this);
+		
 		pa.setLayout(null);
-		
-		ON.setUI(new StyledButtonUI(theme));
-		OFF.setUI(new StyledButtonUI(theme));
-		Connect.setUI(new StyledButtonUI(theme));
-		Disconnect.setUI(new StyledButtonUI(theme));
-		
-		sk1_on.setUI(new StyledButtonUI(theme));
-		sk2_on.setUI(new StyledButtonUI(theme));
-		roof_on.setUI(new StyledButtonUI(theme));
-		
-		sk1_off.setUI(new StyledButtonUI(theme));
-		sk2_off.setUI(new StyledButtonUI(theme));
-		roof_off.setUI(new StyledButtonUI(theme));
-		
-		sk1_resvoff.setUI(new StyledButtonUI(theme));
-		sk2_resvoff.setUI(new StyledButtonUI(theme));
-		roof_heat.setUI(new StyledButtonUI(theme));
-		
-		Font defaultfont = new Font("∏º¿∫ ∞ÌµÒ",Font.PLAIN,13);
+
+		Font defaultfont = new Font("ÎßëÏùÄ Í≥†Îîï",Font.PLAIN,(int)(13*ss));
 		
 		ON.setFont(defaultfont);
 		OFF.setFont(defaultfont);
@@ -176,39 +227,39 @@ public class Main extends JFrame implements Runnable{
 		sk2_resvoff.setFont(defaultfont);
 		roof_heat.setFont(defaultfont);
 		
-		title.setBounds(85,10,260,30);
-		ON.setBounds(20,90,115,30);
-		OFF.setBounds(155,90,115,30);
-		Connect.setBounds(110,50,70,30);
-		Disconnect.setBounds(200, 50, 70, 30);
-		logTitle.setBounds(20,270,340,30);
-		log.setBounds(20,300,355,140);
-		logscroll.setBounds(20,300,355,140);
-		temp1.setBounds(285,45,55,30);
-		humidity1.setBounds(285,65,55,30);
-		temp2.setBounds(285,85,55,30);
-		humidity2.setBounds(285,105,55,30);
-		tempvalue1.setBounds(335,45,70,30);
-		humidityvalue1.setBounds(335,65,70,30);
-		tempvalue2.setBounds(335,85,70,30);
-		humidityvalue2.setBounds(335,105,70,30);
+		title.setBounds((int)(85*ss),(int)(10*ss),(int)(260*ss),(int)(30*ss));
+		ON.setBounds((int)(20*ss),(int)(90*ss),(int)(115*ss),(int)(30*ss));
+		OFF.setBounds((int)(155*ss),(int)(90*ss),(int)(115*ss),(int)(30*ss));
+		Connect.setBounds((int)(110*ss),(int)(50*ss),(int)(70*ss),(int)(30*ss));
+		Disconnect.setBounds((int)(200*ss),(int) (50*ss),(int) (70*ss),(int) (30*ss));
+		logTitle.setBounds((int)(20*ss),(int)(270*ss),(int)(340*ss),(int)(30*ss));
+		log.setBounds((int)(20*ss),(int)(300*ss),(int)(355*ss),(int)(120*ss));
+		logscroll.setBounds((int)(20*ss),(int)(300*ss),(int)(355*ss),(int)(110*ss));
+		temp1.setBounds((int)(285*ss),(int)(45*ss),(int)(55*ss),(int)(30*ss));
+		humidity1.setBounds((int)(285*ss),(int)(65*ss),(int)(55*ss),(int)(30*ss));
+		temp2.setBounds((int)(285*ss),(int)(85*ss),(int)(55*ss),(int)(30*ss));
+		humidity2.setBounds((int)(285*ss),(int)(105*ss),(int)(55*ss),(int)(30*ss));
+		tempvalue1.setBounds((int)(335*ss),(int)(45*ss),(int)(70*ss),(int)(30*ss));
+		humidityvalue1.setBounds((int)(335*ss),(int)(65*ss),(int)(70*ss),(int)(30*ss));
+		tempvalue2.setBounds((int)(335*ss),(int)(85*ss),(int)(70*ss),(int)(30*ss));
+		humidityvalue2.setBounds((int)(335*ss),(int)(105*ss),(int)(70*ss),(int)(30*ss));
 		
-		sk1_title.setBounds(35,150,70,30);
-		sk2_title.setBounds(35,190,70,30);
-		roof_title.setBounds(35,230,70,30);
+		sk1_title.setBounds((int)(35*ss),(int)(150*ss),(int)(70*ss),(int)(30*ss));
+		sk2_title.setBounds((int)(35*ss),(int)(190*ss),(int)(70*ss),(int)(30*ss));
+		roof_title.setBounds((int)(35*ss),(int)(230*ss),(int)(70*ss),(int)(30*ss));
 		
-		sk1_on.setBounds(100,145,70,30);
-		sk2_on.setBounds(100,185,70,30);
-		roof_on.setBounds(100,225,70,30);
+		sk1_on.setBounds((int)(100*ss),(int)(145*ss),(int)(70*ss),(int)(30*ss));
+		sk2_on.setBounds((int)(100*ss),(int)(185*ss),(int)(70*ss),(int)(30*ss));
+		roof_on.setBounds((int)(100*ss),(int)(225*ss),(int)(70*ss),(int)(30*ss));
 		
-		sk1_off.setBounds(190,145,70,30);
-		sk2_off.setBounds(190,185,70,30);
-		roof_off.setBounds(190,225,70,30);
+		sk1_off.setBounds((int)(190*ss),(int)(145*ss),(int)(70*ss),(int)(30*ss));
+		sk2_off.setBounds((int)(190*ss),(int)(185*ss),(int)(70*ss),(int)(30*ss));
+		roof_off.setBounds((int)(190*ss),(int)(225*ss),(int)(70*ss),(int)(30*ss));
 		
-		sk1_resvoff.setBounds(280,145,90,30);
-		sk2_resvoff.setBounds(280,185,90,30);
-		roof_heat.setBounds(280,225,90,30);
-
+		sk1_resvoff.setBounds((int)(280*ss),(int)(145*ss),(int)(90*ss),(int)(30*ss));
+		sk2_resvoff.setBounds((int)(280*ss),(int)(185*ss),(int)(90*ss),(int)(30*ss));
+		roof_heat.setBounds((int)(280*ss),(int)(225*ss),(int)(90*ss),(int)(30*ss));
+		
 		func = new Func("COM1");
 		
 		if(thread == null) {
@@ -218,12 +269,13 @@ public class Main extends JFrame implements Runnable{
 
 		status();
 		
-		title.setFont(new Font("∏º¿∫ ∞ÌµÒ",Font.PLAIN,25));
+		title.setFont(new Font("ÎßëÏùÄ Í≥†Îîï",Font.PLAIN,(int)(25*ss)));
 		
 		JComboBox<Object> select = new JComboBox<Object>(func.portNames);
 		select.setRenderer(new ComboBoxGUI());
 		select.setEditor(new ComboBoxEditor());
-		select.setBounds(20,58,70,23);
+		select.setBounds((int)(20*ss),(int)(58*ss),(int)(70*ss),(int)(23*ss));
+		select.setRenderer(new FontCellRenderer());
 		select.setEditable(true);
 		
 		ActionListener Onlisten = new ActionListener() {
@@ -339,8 +391,21 @@ public class Main extends JFrame implements Runnable{
 		roof_on.addActionListener(roof_onlisten);
 		roof_off.addActionListener(roof_offlisten);
 		roof_heat.addActionListener(roof_heatlisten);
+		
+		ON.setUI(new StyledButtonUI(theme));
+		OFF.setUI(new StyledButtonUI(theme));
+		Connect.setUI(new StyledButtonUI(theme));
+		Disconnect.setUI(new StyledButtonUI(theme));
+		sk1_on.setUI(new StyledButtonUI(theme));
+		sk1_off.setUI(new StyledButtonUI(theme));
+		sk1_resvoff.setUI(new StyledButtonUI(theme));
+		sk2_on.setUI(new StyledButtonUI(theme));
+		sk2_off.setUI(new StyledButtonUI(theme));
+		sk2_resvoff.setUI(new StyledButtonUI(theme));
+		roof_on.setUI(new StyledButtonUI(theme));
+		roof_off.setUI(new StyledButtonUI(theme));
+		roof_heat.setUI(new StyledButtonUI(theme));
 				
-		logscroll.setBorder(new LineBorder(theme,1));
 		log.setEditable(false);
 		
 		pa.add(select);
@@ -375,14 +440,26 @@ public class Main extends JFrame implements Runnable{
 		pa.add(sk1_resvoff);
 		pa.add(sk2_resvoff);
 		pa.add(roof_heat);
-		
+
 		add(pa);
 		
-		setSize(415,500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("ø°æÓƒ¡ ¡¶æÓ Ω√Ω∫≈€");
+		setSize((int)(415*ss),(int)(470*ss));
+		setTitle("ÏóêÏñ¥Ïª® Ï†úÏñ¥ ÏãúÏä§ÌÖú");
 		setVisible(true);
+		setResizable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	class FontCellRenderer extends DefaultListCellRenderer {
+		  public Component getListCellRendererComponent(JList list, Object value,
+		      int index, boolean isSelected, boolean cellHasFocus) {
+		    JLabel label = (JLabel) super.getListCellRendererComponent(list, value,
+		        index, isSelected, cellHasFocus);
+		    Font font = new Font((String) value, Font.PLAIN, (int)(20*ss));
+		    label.setFont(font);
+		    return label;
+		  }
+		}
 	
 	public static void main(String[] args) {
 		new Main();
@@ -397,11 +474,11 @@ public class Main extends JFrame implements Runnable{
 
 		if(list.length==3) {
 			if(number ==1) {
-				tempvalue1.setText(list[1]+" ®¨C");
+				tempvalue1.setText(list[1]+" ¬∫C");
 				humidityvalue1.setText(list[2]+" %");
 				func.Log = "Data updated from TH1 : Temp : "+list[1]+" Humidity : "+list[2];
 			}else if(number ==2) {
-				tempvalue2.setText(list[1]+" ®¨C");
+				tempvalue2.setText(list[1]+" ¬∫C");
 				humidityvalue2.setText(list[2]+" %");
 				func.Log = "Data updated from TH2 : Temp : "+list[1]+" Humidity : "+list[2];
 			}
@@ -445,5 +522,27 @@ public class Main extends JFrame implements Runnable{
 				e.printStackTrace();
 			}
 		}		
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void componentResized(ComponentEvent arg0) {
+
+	    
+		//resize();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
 	}
 }
